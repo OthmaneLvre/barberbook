@@ -7,23 +7,22 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAppointmentRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'client_id' => ['sometimes', 'required', 'exists:clients,id'],
+            'employee_id' => ['sometimes', 'required', 'exists:employees,id'],
+            'salon_service_id' => ['sometimes', 'required', 'exists:salon_services,id'],
+            'appointment_date' => ['sometimes', 'required', 'date'],
+            'appointment_time' => ['sometimes', 'required', 'date_format:H:i'],
+            'status' => ['sometimes', 'required', 'in:pending,confirmed,cancelled,completed'],
+            'notes' => ['nullable', 'string'],
         ];
     }
 }
