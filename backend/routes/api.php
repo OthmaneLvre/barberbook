@@ -35,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
 
-    Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
+    Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->middleware('admin');
 
     Route::apiResource('appointments', AppointmentController::class);
     Route::apiResource('clients', ClientController::class);
