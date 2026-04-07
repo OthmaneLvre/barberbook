@@ -32,14 +32,26 @@ class AvailabilitySlotController extends Controller
             $current = strtotime('+30 minutes', $current);
         }
 
-        $bookedSlots = Appointment::where('employee_id', $employeeId)
+        $appointments = Appointment::with('salonService')
+            ->where('employee_id', $employeeId)
             ->whereDate('appointment_date', $date)
             ->whereIn('status', ['pending', 'confirmed'])
-            ->pluck('appointment_time')
-            ->map(function ($time) {
-                return substr($time, 0, 5);
-            })
-            ->toArray();
+            ->get();
+
+        $bookedSlots = [];
+        
+        foreach ($appointments as $appointment) {
+            $startTime = strtotime($appointment->appointment_time);
+            $duration = (int) $appointment->salonService->duration;
+
+            $slotsCount = max(1, (int) ceil($duration / 30));
+
+            for ($i = 0; $i < $slotsCount; $i++) {
+                $bookedSlots[] = date('H:i', strtotime('+' . ($i * 30) . ' minutes', $startTime));
+            }
+        }
+
+        $bookedSlots = array_unique($bookedSlots);
 
         $availableSlots = array_values(array_diff($slots, $bookedSlots));
 
