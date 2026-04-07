@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\Availability;
 use Illuminate\Http\Request;
 
 class AvailabilitySlotController extends Controller
 {
-    public function index(Request$request)
+    public function index(Request $request)
     {
         $employeeId = $request->query('employee_id');
         $date = $request->query('date');
@@ -19,8 +20,19 @@ class AvailabilitySlotController extends Controller
             ], 422);
         }
 
-        $start = '09:00';
-        $end = '18:00';
+        $dayOfWeek = date('w', strtotime($date)); // 0 = dimanche
+
+        $availability = Availability::where('employee_id', $employeeId)
+            ->where('day_of_week', $dayOfWeek)
+            ->where('is_active', true)
+            ->first();
+
+        if (!$availability) {
+            return response()->json([]); // pas dispo ce jour
+        }
+
+        $start = $availability->start_time;
+        $end = $availability->end_time;
 
         $slots = [];
 
