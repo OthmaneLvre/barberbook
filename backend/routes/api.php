@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AvailabilityController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\AvailabilitySlotController;
 
 
 /*
@@ -41,4 +42,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('salon-services', SalonServiceController::class);
     Route::apiResource('employees', EmployeeController::class);
     Route::apiResource('availabilities', AvailabilityController::class);
+
+    Route::get('/availability-slots', [AvailabilitySlotController::class, 'index']);
 });
