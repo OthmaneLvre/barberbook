@@ -41,7 +41,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clients', ClientController::class);
     Route::apiResource('salon-services', SalonServiceController::class);
     Route::apiResource('employees', EmployeeController::class);
-    Route::apiResource('availabilities', AvailabilityController::class);
 
+    Route::get('/availabilities', [AvailabilityController::class, 'index']);
+    Route::get('/availabilities/{availability}', [AvailabilityController::class, 'show']);
+
+    Route::middleware('admin')->group(function () {
+        Route::post('/availabilities', [AvailabilityController::class, 'store']);
+        Route::put('/availabilities/{availability}', [AvailabilityController::class, 'update']);
+        Route::delete('/availabilities/{availability}', [AvailabilityController::class, 'destroy']);
+    });
+    
     Route::get('/availability-slots', [AvailabilitySlotController::class, 'index']);
 });
