@@ -9,10 +9,19 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const savedToken = window.localStorage.getItem("admin_token");
+    if (savedToken) {
+        setToken(savedToken);
+    }
+  }, []);
+
   async function handleLoadDashboard() {
     try {
       setLoading(true);
       setError("");
+
+      window.localStorage.setItem("admin_token", token);
 
       const result = await fetchWithAuth("/dashboard/stats", token);
       setData(result);
@@ -25,9 +34,15 @@ export default function AdminDashboardPage() {
     }
 }
 
+function handleClearToken() {
+    window.localStorage.removeItem("admin_token");
+    setToken("");
+    setData(null);
+    setError("");
+}
+
   return (
-    <main className="min-h-screen bg-gray-50 p-6">
-      <div className="mx-auto max-w-6xl space-y-6">
+      <div className="space-y-6">
         <header>
           <h1 className="text-3xl font-bold text-gray-900">Dashboard admin</h1>
           <p className="mt-2 text-sm text-gray-600">
@@ -53,11 +68,16 @@ export default function AdminDashboardPage() {
             >
               Charger le dashboard
             </button>
+
+            <button
+                onClick={handleClearToken}
+                className="rounded-xl border border-gray-300 px-5 py-3 text3sm font-medium text-gray-700 hover-bg-gray-50"
+            >
+                Effacer
+            </button>
           </div>
 
-          {error && (
-            <p className="mt-3 text-sm text-red-600">{error}</p>
-          )}
+          {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
         </section>
 
         {loading && (
@@ -127,7 +147,6 @@ export default function AdminDashboardPage() {
           </>
         )}
       </div>
-    </main>
   );
 }
 
