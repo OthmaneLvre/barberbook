@@ -127,7 +127,7 @@ export default function AdminAppointmentsPage() {
 
     return (
         <div className="space-y-6">
-            <header className="flex flex-col gap-4 md:flex-row md-items-center md:justify-between">
+            <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900">Rendez-vous</h1>
                     <p className="mt-2 text-sm text-gray-600">
@@ -138,7 +138,7 @@ export default function AdminAppointmentsPage() {
 
                 <button
                     type="button"
-                    className="inline-flex items-center justify-center rounded-xl bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800"
+                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700"
                 >
                     Nouveau rendez-vous
                 </button>
@@ -199,7 +199,7 @@ export default function AdminAppointmentsPage() {
                             Statut
                         </label>
                         <select 
-                            id="statue"
+                            id="status"
                             value={statusFilter}
                             onChange={(event) => setStatusFilter(event.target.value)}
                             className="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-900 outline-none transition focus:border-gray-900"
@@ -215,7 +215,7 @@ export default function AdminAppointmentsPage() {
                     <div>
                         <label
                             htmlFor="employee"
-                            className="mb-2 block-text-sm font-medium text-gray-700"
+                            className="mb-2 block text-sm font-medium text-gray-700"
                         >
                             Employé
                         </label>
@@ -280,7 +280,7 @@ export default function AdminAppointmentsPage() {
                         <tbody className="divide-y divide-gray-200">
                         {filteredAppointments.length > 0 ? (
                             filteredAppointments.map((appointment) => (
-                            <tr key={appointment.id} className="text-sm text-gray-700">
+                            <tr key={appointment.id} className="text-sm text-gray-700 transition hover:bg-gray-50">
                                 <td className="px-5 py-4 font-medium text-gray-900">
                                 {appointment.client}
                                 </td>
@@ -300,7 +300,7 @@ export default function AdminAppointmentsPage() {
                                 </span>
                                 </td>
                                 <td className="px-5 py-4">
-                                <div className="flex justify-end gap-2">
+                                <div className="mt-4 flex items-center justify-end gap-2">
                                     <button
                                     type="button"
                                     className="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-50"
@@ -319,11 +319,15 @@ export default function AdminAppointmentsPage() {
                             ))
                         ) : (
                             <tr>
-                            <td
-                                colSpan="7"
-                                className="px-5 py-10 text-center text-sm text-gray-500"
-                            >
-                                Aucun rendez-vous ne correspond aux filtres sélectionnés.
+                            <td colSpan="7" className="px-5 py-10">
+                                <div className="flex flex-col items-center justify-center text-center">
+                                    <p className="text-sm font-medium text-gray-700">
+                                        Aucun rendez-vous trouvé
+                                    </p>
+                                    <p className="mt-1 text-sm text-gray-500">
+                                        Essaie de modifier les filters pour afficher d'autres résultats.
+                                    </p>
+                                </div>
                             </td>
                             </tr>
                         )}
@@ -389,9 +393,14 @@ export default function AdminAppointmentsPage() {
                                 </article>
                             ))
                         ) : (
-                            <p className="py-6 text-center text-sm text-gray-500">
-                            Aucun rendez-vous ne correspond aux filtres sélectionnés.
-                            </p>
+                            <div className="flex flex-col items-center justify-center py-8 text-center">
+                                <p className="text-sm font-medium text-gray-700">
+                                Aucun rendez-vous trouvé
+                                </p>
+                                <p className="mt-1 text-sm text-gray-500">
+                                    Essaie de modifier les filtres pour afficher d'autres résultats.
+                                </p>
+                            </div>
                         )}
                 </div>
             </section>
