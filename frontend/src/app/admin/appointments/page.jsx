@@ -300,7 +300,7 @@ export default function AdminAppointmentsPage() {
                                 </span>
                                 </td>
                                 <td className="px-5 py-4">
-                                <div className="mt-4 flex items-center justify-end gap-2">
+                                <div className="flex items-center justify-end gap-2">
                                     <button
                                     type="button"
                                     className="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-50"
@@ -325,7 +325,7 @@ export default function AdminAppointmentsPage() {
                                         Aucun rendez-vous trouvé
                                     </p>
                                     <p className="mt-1 text-sm text-gray-500">
-                                        Essaie de modifier les filters pour afficher d'autres résultats.
+                                        Essaie de modifier les filtres pour afficher d'autres résultats.
                                     </p>
                                 </div>
                             </td>
